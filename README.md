@@ -83,7 +83,7 @@ tmp_move_call = MoveCallTransaction(
                        object_id_to_transfer,
                        random_wallet.get_address()
                    ], 
-                   gas_budget=1000,
+                   gas_budget='1000',
                    gas_payment=None, 
                 )
 
