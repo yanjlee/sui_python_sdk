@@ -5,7 +5,7 @@ from .rpc_tx_data_serializer import RpcTxDataSerializer
 from .wallet import SuiWallet
 from .models import MoveCallTransaction
 from typing import Optional, List
-
+from .signer import TxnMetaData
 
 class SignerWithProvider:
 
@@ -20,7 +20,6 @@ class SignerWithProvider:
 
         self._rpc_minor_version: Optional[int] = None
         self._rpc_major_version: Optional[int] = None
-        self._INTENT_BYTES: List[int] = [0, 0, 0]
 
     def get_address(self):
         return self.signer_wallet.get_address()
@@ -32,30 +31,16 @@ class SignerWithProvider:
         return self.provider.request_tokens_from_faucet(self.get_address())
 
     def sign_and_execute_transaction(self, tx_bytes: bytes):
-        data_to_sign = tx_bytes
-        is_rpc_version_valid = isinstance(self._rpc_major_version, int) and isinstance(self._rpc_minor_version, int)
-        try:
-            if is_rpc_version_valid is False:
-                # try to fetch rpc version
-                self._fetch_and_update_rpc_version()
-        except:
-            pass
-        is_rpc_version_valid = isinstance(self._rpc_major_version, int) and isinstance(self._rpc_minor_version, int)
-        if (is_rpc_version_valid is False) or (self._rpc_major_version == 0 and self._rpc_minor_version >= 19):
-            data_to_sign = bytes(self._INTENT_BYTES + list(map(int, data_to_sign)))
-
-        signature_bytes = self.sign_data(data_to_sign)
-        return self.provider.execute_transaction(
-            tx_bytes_b64_encoded=base64.b64encode(tx_bytes).decode(),
-            signature_b64_encoded=base64.b64encode(signature_bytes).decode(),
-            pubkey_b64_encoded=self.signer_wallet.get_public_key_as_b64_string(),
-        )
+        tx = TxnMetaData(tx_bytes)
+        signer = tx.SignSerializedSigWith(self.signer_wallet.private_key)
+        return self.provider.execute_transaction(signer)
 
     def execute_move_call(self, tx_move_call: MoveCallTransaction):
-        tx_bytes_b64 = self.serializer.new_move_call(
+        res = self.serializer.new_move_call(
             signer_addr=self.signer_wallet.get_address(),
-            tx=tx_move_call)["result"]["txBytes"]
-        return self.sign_and_execute_transaction(tx_bytes=base64.b64decode(tx_bytes_b64))
+            tx=tx_move_call)
+        tx_bytes_b64 = res["result"]["txBytes"]
+        return self.sign_and_execute_transaction(tx_bytes_b64)
 
     def _fetch_and_update_rpc_version(self):
         rpc_version_res = self.provider.get_rpc_version()

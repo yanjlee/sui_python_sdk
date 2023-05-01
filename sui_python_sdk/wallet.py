@@ -2,7 +2,7 @@ import base64
 import bip_utils
 import hashlib
 import nacl
-
+from nacl.signing import SigningKey
 
 class SignatureScheme:
     ED25519 = 'ED25519'
@@ -28,12 +28,13 @@ class SuiWallet:
             mnemonic=bip_utils.Bip39MnemonicGenerator().FromWordsNumber(bip_utils.Bip39WordsNum.WORDS_NUM_24).ToStr())
 
     def get_address(self) -> str:
-        return "0x" + hashlib.blake2b(
-            self.bip32_der_ctx.PublicKey().RawCompressed().ToBytes(),
-            digest_size=32).hexdigest()[:64]
+        return "0x" + hashlib.blake2b(self.public_key, digest_size=32).hexdigest()[:64]
 
     def sign_data(self, data: bytes) -> bytes:
-        return nacl.signing.SigningKey(self.private_key).sign(data)[:64]  # Todo: support secp256k1 key and signature
+        return SigningKey(self.private_key).sign(data)[:64]  # Todo: support secp256k1 key and signature
 
     def get_public_key_as_b64_string(self) -> str:
         return base64.b64encode(self.public_key[1:]).decode()
+
+    def get_public_kye(self):
+        return self.public_key

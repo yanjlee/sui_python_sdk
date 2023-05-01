@@ -29,7 +29,6 @@ class TransferSuiTransaction(Tx):
         self.amount = amount
 
 
-
 class MoveCallTransaction(Tx):
     def __init__(self,
                  package_object_id: str,

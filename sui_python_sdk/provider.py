@@ -2,7 +2,7 @@ import requests as rq
 import uuid
 import base64
 from typing import Dict, Optional, Union
-
+from .signer import SignedTransactionSerializedSig
 from .wallet import SignatureScheme
 
 
@@ -79,7 +79,7 @@ class SuiJsonRpcProvider:
         return self.send_request_to_rpc(method="sui_getTransactions", params=[query, cursor, limit, order])
 
     def get_transaction_with_effects(self, digest: str):
-        return self.send_request_to_rpc(method="sui_getTransaction", params=[digest])
+        return self.send_request_to_rpc(method="sui_getTransactionBlock", params=[digest])
 
     def get_events_by_transaction(self, digest: str, limit: int = 100):
         return self.send_request_to_rpc(method="sui_getEventsByTransaction", params=[digest, limit])
@@ -92,33 +92,23 @@ class SuiJsonRpcProvider:
     def get_events_by_object(self, object_id: str, limit: int = 100, start_time: int = 0, end_time: int = 2 ** 53 - 1):
         return self.send_request_to_rpc(method="sui_getEventsByObject", params=[object_id, limit, start_time, end_time])
 
-    def execute_transaction(self,
-                            tx_bytes_b64_encoded: str,
-                            signature_b64_encoded: str,
-                            pubkey_b64_encoded: str,
-                            signature_scheme: SignatureScheme = SignatureScheme.ED25519,
-                            executeType: ExecuteTransactionRequestType = ExecuteTransactionRequestType.WaitForEffectsCert):
-        # this function actually broadcasts the transaction
-        if isinstance(tx_bytes_b64_encoded, bytes):
-            tx_bytes_b64_encoded = base64.b64encode(tx_bytes_b64_encoded).decode()
-        if isinstance(signature_b64_encoded, bytes):
-            signature_b64_encoded = base64.b64encode(signature_b64_encoded).decode()
-
-        signature_scheme_to_flag = {
-            SignatureScheme.ED25519: 0x00,
-            SignatureScheme.Secp256k1: 0x01,
-        }
-        signature_scheme_flag = signature_scheme_to_flag[signature_scheme]
-
-        serialized_sig = [signature_scheme_flag] + \
-                         list(base64.b64decode(signature_b64_encoded)) + \
-                         list(base64.b64decode(pubkey_b64_encoded))
-
-        return self.send_request_to_rpc(method="sui_executeTransactionSerializedSig",
-                                        params=[
-                                            tx_bytes_b64_encoded,
-                                            base64.b64encode(bytes(serialized_sig)).decode(),
-                                            executeType])
+    def execute_transaction(self, signer: SignedTransactionSerializedSig):
+        params = [
+            signer.TxBytes,
+            [signer.Signature],
+            {
+                "showInput": True,
+                "showRawInput": True,
+                "showEffects": True,
+                "showEvents": True,
+                "showObjectChanges": True,
+                "showBalanceChanges": True
+            },
+            ExecuteTransactionRequestType.WaitForEffectsCert
+        ]
+        # print(params)
+        return self.send_request_to_rpc(method="sui_executeTransactionBlock",
+                                        params=params)
 
     def get_total_transaction_number(self):
         return self.send_request_to_rpc(method="sui_getTotalTransactionNumber")

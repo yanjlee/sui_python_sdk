@@ -33,7 +33,7 @@ class RpcTxDataSerializer:
 
     def new_move_call(self, signer_addr: str, tx: MoveCallTransaction):
         return self.send_request_to_rpc(
-            method="sui_moveCall",
+            method="unsafe_moveCall",
             params=[
                 signer_addr,
                 tx.package_object_id,
