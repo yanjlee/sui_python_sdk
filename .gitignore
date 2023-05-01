@@ -1,2 +1,4 @@
 .idea
 .DS_store
+test.py
+sui_python_sdk/__pycache__/
