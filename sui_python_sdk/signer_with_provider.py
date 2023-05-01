@@ -7,6 +7,7 @@ from .models import MoveCallTransaction
 from typing import Optional, List
 from .signer import TxnMetaData
 
+
 class SignerWithProvider:
 
     def __init__(self,
@@ -39,8 +40,12 @@ class SignerWithProvider:
         res = self.serializer.new_move_call(
             signer_addr=self.signer_wallet.get_address(),
             tx=tx_move_call)
-        tx_bytes_b64 = res["result"]["txBytes"]
-        return self.sign_and_execute_transaction(tx_bytes_b64)
+        tx_bytes = res["result"]["txBytes"]
+
+        # res = self.provider.get_dry_run_transaction_block(tx_bytes)
+        # print(res)
+
+        return self.sign_and_execute_transaction(tx_bytes)
 
     def _fetch_and_update_rpc_version(self):
         rpc_version_res = self.provider.get_rpc_version()
