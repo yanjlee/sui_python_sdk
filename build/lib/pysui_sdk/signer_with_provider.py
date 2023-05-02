@@ -44,11 +44,6 @@ class SignerWithProvider:
 
         res = self.provider.get_dry_run_transaction_block(tx_bytes)
         dry_run_status_map = res['result']['effects']['status']
-        # check can execute by dry run but not real run, may fail by blow reason
-        # 1, gas budget( solve: incr your gas budget)
-        # 2, function limit , some nft one account can only mint once ( solve: check is it has mint before)
-        # 3, no enough sui gas to execute the transaction
-        # etc... see error msg
         if dry_run_status_map['status'] == 'failure':
             raise Exception(dry_run_status_map['error'])
 
