@@ -4,7 +4,7 @@ Python SDK to interact with Sui Blockchain
 Supports creating wallets, fetching data, signing transactions 
 # Install
 ``
-pip install sui-python-sdk
+pip install pysui-sdk
 ``
 
 Todo: 
@@ -61,39 +61,29 @@ signer = SignerWithProvider(provider=provider, serializer=serializer, signer_wal
 provider.request_tokens_from_faucet(my_wallet.get_address())
 ```
 
-
-```python
-# Get objects owned by wallet
-provider.get_objects_owned_by_address(my_wallet.get_address())
-```
-### Execute Transaction
-```python
-# Transfer an Object 
-object_id_to_transfer = next(item for item in provider.get_objects_owned_by_address(my_wallet.get_address())["result"] if item["type"]=='0x2::coin::Coin<0x2::sui::SUI>')["objectId"]
-> '0x1794085eed584e9aaafa317c6f0422f814ffb260'
-```
-
 ```python
 # Create a move call transaction
 tmp_move_call = MoveCallTransaction(
-                   package_object_id="0x2",
-                   module="sui",
-                   function="transfer", 
-                   type_arguments=[], 
-                   arguments=[
-                       object_id_to_transfer,
-                       random_wallet.get_address()
-                   ], 
-                   gas_budget='1000',
-                   gas_payment=None, 
-                )
+            package_object_id='0xe220547c8a45080146d09cbb22578996628779890d70bd38ee4cf2eb05a4777d',
+            module="bluemove_x_testnet",
+            function="mint_with_quantity",
+            type_arguments=[
+
+            ],
+            arguments=[
+                '0x9269c5575b5a949fe094723e600eb0835193c207916442b8ae2162ae838d4ab2',
+                '1'
+            ],
+            gas_budget='10000000',
+            gas_payment=None,
+        )
 
 # Sign and execute the transaction
-signer.execute_move_call(tx_move_call=tmp_move_call)
+tx_digest = signer.execute_move_call(tx_move_call=tmp_move_call)['result']['digest']
 ```
 
 #### Fetch the Transaction
 ```python
 # Get the transaction 
-provider.get_transaction_with_effects('OF1XpY/BYHQhUjtjzN7IlwxD/YTC1yFQ5Dvh8zzC2Uc=')
+provider.get_transaction_with_effects(tx_digest)
 ```
