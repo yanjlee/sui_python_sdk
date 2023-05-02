@@ -1,5 +1,9 @@
-
 Python SDK to interact with Sui Blockchain 
+
+forked from georgelombardi97/sui_python_sdk
+remove some api witch has not include in sui json api list
+add more json api
+fix signing transactions signature method 
 
 Supports creating wallets, fetching data, signing transactions 
 # Install
