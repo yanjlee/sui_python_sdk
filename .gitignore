@@ -2,3 +2,5 @@
 .DS_store
 test.py
 pysui_sdk/__pycache__/
+*.egg-info
+dist
