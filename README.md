@@ -85,5 +85,5 @@ tx_digest = signer.execute_move_call(tx_move_call=tmp_move_call)['result']['dige
 #### Fetch the Transaction
 ```python
 # Get the transaction 
-provider.get_transaction_with_effects(tx_digest)
+provider.get_transaction_block(tx_digest)
 ```
