@@ -4,7 +4,7 @@ Python SDK to interact with Sui Blockchain
 Supports creating wallets, fetching data, signing transactions 
 # Install
 ``
-pip install sui-python-sdk
+pip install pysui-sdk
 ``
 
 Todo: 
