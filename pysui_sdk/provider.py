@@ -201,6 +201,23 @@ class SuiJsonRpcProvider:
     def get_dynamic_fields(self, parent_object_id: str, cursor: str = None, limit: int = 10):
         return self.send_request_to_rpc(method="suix_getDynamicFields", params=[parent_object_id, cursor, limit])
 
+    def split_coins(self, address: str, coin_object_id: str, split_amount: list[str], gas=None, gas_budget="100000"):
+        return self.send_request_to_rpc(method="unsafe_splitCoin", params=[
+            address,
+            coin_object_id,
+            split_amount,
+            gas,
+            gas_budget
+        ])
+
+    def transfer_objects(self, address: str, transfer_object_id: str, recipient: str, gas=None, gas_budget="100000"):
+        return self.send_request_to_rpc(method="unsafe_transferObject", params=[
+            address,
+            transfer_object_id,
+            gas,
+            gas_budget,
+            recipient
+        ])
     # def get_objects_owned_by_object(self, object_id: str):
     #     return self.send_request_to_rpc(method="sui_getObjectsOwnedByObject", params=[object_id])
 
