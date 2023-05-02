@@ -86,7 +86,7 @@ class SuiJsonRpcProvider:
     def get_check_point(self, check_point_id: str = "1000"):
         return self.send_request_to_rpc(method="sui_getCheckpoint", params=[check_point_id])
 
-    def get_check_points(self, cursor: str, limit: int = 10, order: bool = False):
+    def get_check_points(self, cursor: str = None, limit: int = 10, order: bool = False):
         return self.send_request_to_rpc(method="sui_getCheckpoints", params=[cursor, limit, order])
 
     def get_events(self, tx_digest: str):
@@ -182,13 +182,13 @@ class SuiJsonRpcProvider:
         return self.send_request_to_rpc(method="sui_tryMultiGetPastObjects", params=[object_ids, options])
 
     # optional paging cursor, object_id
-    def get_all_coins(self, address: str, cursor: str = '', limit: int = 10):
+    def get_all_coins(self, address: str, cursor: str = None, limit: int = 10):
         return self.send_request_to_rpc(method="suix_getAllCoins", params=[address, cursor, limit])
 
     def get_coin_metadata(self, coin_type: str):
         return self.send_request_to_rpc(method="suix_getCoinMetadata", params=[coin_type])
 
-    def get_coins(self, address: str, coin_type: str = '0x2::sui::SUI', cursor: str = '', limit: int = 10):
+    def get_coins(self, address: str, coin_type: str = '0x2::sui::SUI', cursor: str = None, limit: int = 10):
         return self.send_request_to_rpc(method="suix_getCoins", params=[address, coin_type, cursor, limit])
 
     # example epoch="5000"
@@ -198,7 +198,7 @@ class SuiJsonRpcProvider:
     def get_dynamic_field_object(self, parent_object_id: str, dynamic_field_name: str):
         return self.send_request_to_rpc(method="suix_getDynamicFieldObject", params=[parent_object_id, dynamic_field_name])
 
-    def get_dynamic_fields(self, parent_object_id: str, cursor: str = '', limit: int = 10):
+    def get_dynamic_fields(self, parent_object_id: str, cursor: str = None, limit: int = 10):
         return self.send_request_to_rpc(method="suix_getDynamicFields", params=[parent_object_id, cursor, limit])
 
     # def get_objects_owned_by_object(self, object_id: str):
