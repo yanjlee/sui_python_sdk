@@ -12,5 +12,5 @@ setuptools.setup(
     packages=["pysui_sdk"],
     url="https://github.com/satisfywithmylife/sui_python_sdk",
     python_requires=">=3.7",
-    version="1.0.4",
+    version="1.0.7",
 )
