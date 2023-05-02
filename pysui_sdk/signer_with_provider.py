@@ -42,8 +42,10 @@ class SignerWithProvider:
             tx=tx_move_call)
         tx_bytes = res["result"]["txBytes"]
 
-        # res = self.provider.get_dry_run_transaction_block(tx_bytes)
-        # print(res)
+        res = self.provider.get_dry_run_transaction_block(tx_bytes)
+        dry_run_status_map = res['result']['effects']['status']
+        if dry_run_status_map['status'] == 'failure':
+            raise Exception(dry_run_status_map['error'])
 
         return self.sign_and_execute_transaction(tx_bytes)
 
