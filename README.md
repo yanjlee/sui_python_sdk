@@ -17,13 +17,14 @@ Todo:
 - Add support for publishing move packages 
 
 # How to Use 
-### Import required objects 
+### Import required objects
+
 ```python
-from sui_python_sdk.wallet import SuiWallet
-from sui_python_sdk.provider import SuiJsonRpcProvider
-from sui_python_sdk.rpc_tx_data_serializer import RpcTxDataSerializer
-from sui_python_sdk.signer_with_provider import SignerWithProvider
-from sui_python_sdk.models import TransferObjectTransaction,TransferSuiTransaction,MoveCallTransaction
+from pysui_sdk.wallet import SuiWallet
+from pysui_sdk.provider import SuiJsonRpcProvider
+from pysui_sdk.rpc_tx_data_serializer import RpcTxDataSerializer
+from pysui_sdk.signer_with_provider import SignerWithProvider
+from pysui_sdk.models import TransferObjectTransaction, TransferSuiTransaction, MoveCallTransaction
 ```
 
 ### Wallet 

@@ -228,6 +228,5 @@ class SuiJsonRpcProvider:
     # def get_events_by_object(self, object_id: str, limit: int = 100, start_time: int = 0, end_time: int = 2 ** 53 - 1):
     #     return self.send_request_to_rpc(method="sui_getEventsByObject", params=[object_id, limit, start_time, end_time])
 
-
     # def get_total_transaction_in_range(self, start_of_range: int, end_of_range: int):
     #     return self.send_request_to_rpc(method="sui_getTransactionsInRange", params=[start_of_range, end_of_range])
