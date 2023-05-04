@@ -1,6 +1,6 @@
 this project can only use for some simple methods or transaction
 
-if you want to get more professional and complex methods or programmable transaction
+if you want to get more Professional，Constructable complex methods or Programmable Transaction
 
 please move here and use [pysui](https://github.com/FrankC01/pysui)
 
