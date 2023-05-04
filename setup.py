@@ -8,7 +8,7 @@ setuptools.setup(
     ],
     include_package_data=True,
     install_requires=["httpx", "pynacl"],
-    name="pysui-sdk",
+    name="suiutils-py",
     packages=["suiutils_py"],
     url="https://github.com/satisfywithmylife/sui_python_sdk",
     python_requires=">=3.7",
