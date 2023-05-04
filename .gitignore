@@ -1,7 +1,7 @@
 .idea
 .DS_store
 test.py
-pysui_sdk/__pycache__/
+suiutils_py/__pycache__/
 *.egg-info
 dist
 build

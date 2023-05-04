@@ -36,5 +36,8 @@ class SuiWallet:
     def get_public_key_as_b64_string(self) -> str:
         return base64.b64encode(self.public_key[1:]).decode()
 
+    def get_pk(self):
+        return self.private_key.hex()
+
     def get_public_kye(self):
         return self.public_key

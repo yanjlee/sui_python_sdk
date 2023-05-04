@@ -36,6 +36,14 @@ class SignerWithProvider:
         signer = tx.SignSerializedSigWith(self.signer_wallet.private_key)
         return self.provider.execute_transaction(signer)
 
+    def split_sui_coin(self, amount: str):
+        object_id = self.get_coin_object()
+        res = self.provider.split_coins(self.signer_wallet.get_address(), object_id, [amount], None, "100000000")
+        tx = res['result']['txBytes']
+        res = self.sign_and_execute_transaction(tx)
+        new_object_id = res['result']['effects']['created'][0]['reference']['objectId']
+        return new_object_id
+
     def execute_move_call(self, tx_move_call: MoveCallTransaction):
         res = self.serializer.new_move_call(
             signer_addr=self.signer_wallet.get_address(),
@@ -61,3 +69,22 @@ class SignerWithProvider:
             version_split = version_str.split(".")
             self._rpc_major_version = int(version_split[0])
             self._rpc_minor_version = int(version_split[1])
+
+    def get_coin_object(self, transfer_coin_type: str = '0x2::sui::SUI') -> str:
+        cursor = None
+        limit = 10
+        while 1:
+            res = self.provider.get_all_coins(self.signer_wallet.get_address(), cursor, limit)
+            object_list = res['result']['data']
+
+            for obj_item in object_list:
+                if obj_item['coinType'] != transfer_coin_type:
+                    continue
+                obj_id = obj_item['coinObjectId']
+                return obj_id
+            if res['result']['hasNextPage']:
+                cursor = res['nextCursor']
+            else:
+                break
+
+        return ''

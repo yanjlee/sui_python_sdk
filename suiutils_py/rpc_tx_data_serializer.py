@@ -32,9 +32,7 @@ class RpcTxDataSerializer:
                                         params=[signer_addr, tx.sui_object_id, tx.gas_budget, tx.recipient, tx.amount])
 
     def new_move_call(self, signer_addr: str, tx: MoveCallTransaction):
-        return self.send_request_to_rpc(
-            method="unsafe_moveCall",
-            params=[
+        params = [
                 signer_addr,
                 tx.package_object_id,
                 tx.module,
@@ -43,4 +41,7 @@ class RpcTxDataSerializer:
                 tx.arguments,
                 tx.gas_payment,
                 tx.gas_budget,
-            ])
+            ]
+        return self.send_request_to_rpc(
+            method="unsafe_moveCall",
+            params=params)

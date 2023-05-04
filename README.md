@@ -26,11 +26,11 @@ Todo:
 ### Import required objects
 
 ```python
-from pysui_sdk.wallet import SuiWallet
-from pysui_sdk.provider import SuiJsonRpcProvider
-from pysui_sdk.rpc_tx_data_serializer import RpcTxDataSerializer
-from pysui_sdk.signer_with_provider import SignerWithProvider
-from pysui_sdk.models import TransferObjectTransaction, TransferSuiTransaction, MoveCallTransaction
+from suiutils_py.wallet import SuiWallet
+from suiutils_py.provider import SuiJsonRpcProvider
+from suiutils_py.rpc_tx_data_serializer import RpcTxDataSerializer
+from suiutils_py.signer_with_provider import SignerWithProvider
+from suiutils_py.models import TransferObjectTransaction, TransferSuiTransaction, MoveCallTransaction
 ```
 
 ### Wallet 

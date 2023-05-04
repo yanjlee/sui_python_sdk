@@ -377,7 +377,7 @@ class SuiJsonRpcProvider:
             gas_budget
         ])
 
-    def split_coin_equal(self, address: str, coin_object_id: str, split_count: int, gas: str = None, gas_budget: str = "10000"):
+    def split_coin_equal(self, address: str, coin_object_id: str, split_count: str, gas: str = None, gas_budget: str = "10000"):
         return self.send_request_to_rpc(method="unsafe_splitCoinEqual", params=[
             address,
             coin_object_id,
