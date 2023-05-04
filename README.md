@@ -64,8 +64,8 @@ random_wallet.get_address()
 ### Providers
 ```python
 # Setup Providers
-rpc_url = "https://fullnode.devnet.sui.io"
-faucet_url ="https://faucet.devnet.sui.io/gas"
+rpc_url = "https://fullnode.testnet.sui.io"
+faucet_url ="https://faucet.testnet.sui.io/gas"
 
 provider = SuiJsonRpcProvider(rpc_url=rpc_url, faucet_url=faucet_url)
 serializer = RpcTxDataSerializer(rpc_url=rpc_url)
