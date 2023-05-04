@@ -8,6 +8,8 @@ add more json api
 
 fix signing transactions signature method 
 
+
+
 Supports creating wallets, fetching data, signing transactions 
 # Install
 ``
@@ -15,6 +17,7 @@ pip install pysui-sdk
 ``
 
 Todo: 
+- try to support programmable transaction
 - Better type checking
 - Use objects instead of json or dict models 
 - More functions & helpers   
