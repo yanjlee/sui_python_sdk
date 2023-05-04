@@ -1,3 +1,12 @@
+this project can only use for some simple methods or transaction
+
+if you want to get more professional and complex methods or programmable transaction
+
+please move here and use [pysui](https://github.com/FrankC01/pysui)
+
+
+-------------
+
 Python SDK to interact with Sui Blockchain 
 
 forked from georgelombardi97/sui_python_sdk
@@ -9,15 +18,13 @@ add more json api
 fix signing transactions signature method 
 
 
-
 Supports creating wallets, fetching data, signing transactions 
 # Install
 ``
-pip install pysui-sdk
+pip install suiutils-py
 ``
 
 Todo: 
-- try to support programmable transaction
 - Better type checking
 - Use objects instead of json or dict models 
 - More functions & helpers   
