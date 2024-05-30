@@ -1,8 +1,7 @@
 import setuptools
-
 setuptools.setup(
-    author="shawngmy",
-    author_email="shawngmy@gmail.com",
+    author="shawngmy, yanjlee",
+    author_email="shawngmy@gmail.com, yanjlee@163.com",
     classifiers=[
         "Programming Language :: Python :: 3",
     ],
@@ -12,5 +11,5 @@ setuptools.setup(
     packages=["suiutils_py"],
     url="https://github.com/satisfywithmylife/sui_python_sdk",
     python_requires=">=3.7",
-    version="1.0.7",
+    version="1.0.8",
 )
